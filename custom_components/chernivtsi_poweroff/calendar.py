@@ -10,7 +10,7 @@ from homeassistant.helpers.entity import EntityDescription
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
 
-from .coordinator import LvivPowerOffCoordinator
+from .coordinator import ChernivtsiPowerOffCoordinator
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,11 +22,11 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Yasno outages calendar platform."""
     LOGGER.debug("Setup new entry: %s", config_entry)
-    coordinator: LvivPowerOffCoordinator = config_entry.runtime_data
-    async_add_entities([LvivPowerOffCalendar(coordinator)])
+    coordinator: ChernivtsiPowerOffCoordinator = config_entry.runtime_data
+    async_add_entities([ChernivtsiPowerOffCalendar(coordinator)])
 
 
-class LvivPowerOffCalendar(CalendarEntity):
+class ChernivtsiPowerOffCalendar(CalendarEntity):
     """Implementation of calendar entity."""
 
     def __init__(
