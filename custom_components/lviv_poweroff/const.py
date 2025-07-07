@@ -1,8 +1,8 @@
-"""Constants for the Lviv Power Offline integration."""
+"""Constants for the Chernivtsi Power Offline integration."""
 
 from enum import StrEnum
 
-DOMAIN = "lviv_poweroff"
+DOMAIN = "chernivtsi_poweroff"
 
 POWEROFF_GROUP_CONF = "poweroff_group"
 
@@ -13,11 +13,8 @@ STATE_OFF = "Power OFF"
 
 
 class PowerOffGroup(StrEnum):
-    """PowerOff groups in Lviv oblast."""
+    """PowerOff groups in Chernivtsi oblast."""
 
-    OneOne = "1.1"
-    OneTwo = "1.2"
-    TwoOne = "2.1"
-    TwoTwo = "2.2"
-    ThreeOne = "3.1"
-    ThreeTwo = "3.2"
+    One = "1"
+    Two = "2"
+    Three = "3"
