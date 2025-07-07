@@ -1,4 +1,4 @@
-"""Provides the implementation of the Lviv PowerOff calendar."""
+"""Provides the implementation of the Chernivtsi PowerOff calendar."""
 
 import datetime
 import logging
@@ -31,14 +31,14 @@ class LvivPowerOffCalendar(CalendarEntity):
 
     def __init__(
         self,
-        coordinator: LvivPowerOffCoordinator,
+        coordinator: ChernivtsiPowerOffCoordinator,
     ) -> None:
-        """Initialize the LvivPowerOffCoordinator entity."""
+        """Initialize the ChernivtsiPowerOffCoordinator entity."""
         super().__init__()
         self.coordinator = coordinator
         self.entity_description = EntityDescription(
             key="calendar",
-            name="Lviv PowerOff Calendar",
+            name="Chernivtsi PowerOff Calendar",
         )
         self._attr_unique_id = (
             f"{coordinator.config_entry.entry_id}-"
