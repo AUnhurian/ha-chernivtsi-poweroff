@@ -40,7 +40,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     }
 
 
-class LvivPowerOffConfigFlow(ConfigFlow, domain=DOMAIN):
+class ChernivtsiPowerOffConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Chernivtsi Power Offline."""
 
     VERSION = 1
