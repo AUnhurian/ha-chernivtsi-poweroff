@@ -18,7 +18,7 @@ LOGGER = logging.getLogger(__name__)
 TIMEFRAME_TO_CHECK = timedelta(hours=24)
 
 
-class LvivPowerOffCoordinator(DataUpdateCoordinator):
+class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
     """Coordinates the polling of power off periods."""
 
     config_entry: ConfigEntry
