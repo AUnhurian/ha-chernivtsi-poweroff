@@ -1,4 +1,4 @@
-"""Provides the LvivPowerOffCoordinator class for polling power off periods."""
+"""Provides the ChernivtsiPowerOffCoordinator class for polling power off periods."""
 
 from datetime import datetime, timedelta
 import logging
