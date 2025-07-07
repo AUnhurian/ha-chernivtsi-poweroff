@@ -1,4 +1,4 @@
-"""Config flow for Lviv Power Offline integration."""
+"""Config flow for Chernivtsi Power Offline integration."""
 
 from __future__ import annotations
 
@@ -35,13 +35,13 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
 
     # Return info that you want to store in the config entry.
     return {
-        "title": "Lviv Power Offline",
+        "title": "Chernivtsi Power Offline",
         POWEROFF_GROUP_CONF: data[POWEROFF_GROUP_CONF],
     }
 
 
 class LvivPowerOffConfigFlow(ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Lviv Power Offline."""
+    """Handle a config flow for Chernivtsi Power Offline."""
 
     VERSION = 1
 
