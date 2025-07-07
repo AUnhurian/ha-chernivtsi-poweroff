@@ -4,13 +4,13 @@
 
 # ⚡️ Home Assistant Chernivtsi PowerOff
 
-An integration for electricity shutdown schedules of [ChernivtsiOblEnergo](lvivoblenergo). Based on data from [EnergyUA][energyua].
+An integration for electricity shutdown schedules of [ChernivtsiOblEnergo](Chernivtsioblenergo). Based on data from [EnergyUA][energyua].
 
-This integration for [Home Assistant][home-assistant] provides information about planned electricity shutdowns of [LvivOblEnergo](lvivoblenergo) in Lvivska oblast:
+This integration for [Home Assistant][home-assistant] provides information about planned electricity shutdowns of [ChernivtsiOblEnergo](chernivtsioblenergo) in Lvivska oblast:
 calendar of planned shutdowns, time sensors for the next planned power on and off events. It is based on messages posted by a community
 driven project [EnergyUA][energyua].
 
-**💡 Note:** This project is not affiliated with [EnergyUA][energyua] or [LvivOblEnergo](lvivoblenergo) in any way. This integration is developed by an individual.
+**💡 Note:** This project is not affiliated with [EnergyUA][energyua] or [ChervintsiOblEnergo](chernivtsioblenergo) in any way. This integration is developed by an individual.
 Provided data may be incorrect or misleading, follow the official channels for reliable information.
 
 > This integration is inspired by [ha-yasno-outages](https://github.com/denysdovhan/ha-yasno-outages) by [Denys Dovhan](https://github.com/denysdovhan).
@@ -25,13 +25,13 @@ If it doesn't work, adding this repository to HACS manually by adding this URL:
 
 1. Visit **HACS** → **Integrations** → **...** (in the top right) → **Custom repositories**
 1. Click **Add**
-1. Paste `https://github.com/tsdaemon/ha-lviv-poweroff` into the **URL** field
+1. Paste `https://github.com/oppenheimer14/ha-chernivtsi-poweroff` into the **URL** field
 1. Chose **Integration** as a **Category**
 1. **Lviv PowerOff** will appear in the list of available integrations. Install it normally.
 
 ## Usage
 
-This integration is configurable via UI. On **Devices and Services** page, click **Add Integration** and search for **Lviv PowerOff**.
+This integration is configurable via UI. On **Devices and Services** page, click **Add Integration** and search for **Chernivtsi PowerOff**.
 
 Find your group by visiting [EnergyUA][energyua] website and typing your address in the search bar. Select your group in the configuration.
 
@@ -45,11 +45,11 @@ Integration also provides a calendar view of planned outages. You can add it to 
 
 <!-- References -->
 
-[energyua]: https://lviv.energy-ua.info/
-[lvivoblenergo]: https://loe.lviv.ua/
+[energyua]: https://chernivtsi.energy-ua.info/
+[chernivtsioblenergo]: https://oblenergo.cv.ua/
 [home-assistant]: https://www.home-assistant.io/
 [hacs-url]: https://github.com/hacs/integration
-[hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=tsdaemon&repository=ha-lviv-poweroff&category=integration
+[hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=tsdaemon&repository=ha-chernivtsi-poweroff&category=integration
 [hacs-install-image]: https://my.home-assistant.io/badges/hacs_repository.svg
 [calendar-card]: https://www.home-assistant.io/dashboards/calendar/
 
