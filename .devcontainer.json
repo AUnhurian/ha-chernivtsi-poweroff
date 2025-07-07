@@ -1,5 +1,5 @@
 {
-    "name": "ha-lviv-poweroff",
+    "name": "ha-chernivtsi-poweroff",
     "dockerFile": "Dockerfile",
     "forwardPorts": [8123],
     "postCreateCommand": "scripts/setup",
