@@ -27,7 +27,7 @@ If it doesn't work, adding this repository to HACS manually by adding this URL:
 1. Click **Add**
 1. Paste `https://github.com/oppenheimer14/ha-chernivtsi-poweroff` into the **URL** field
 1. Chose **Integration** as a **Category**
-1. **Lviv PowerOff** will appear in the list of available integrations. Install it normally.
+1. **Chernivtsi PowerOff** will appear in the list of available integrations. Install it normally.
 
 ## Usage
 
