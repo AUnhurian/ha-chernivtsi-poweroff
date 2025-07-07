@@ -1,4 +1,4 @@
-"""The Lviv Power Offline integration."""
+"""The Chernivtsi Power Offline integration."""
 
 from __future__ import annotations
 
@@ -6,14 +6,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
-from .coordinator import LvivPowerOffCoordinator
+from .coordinator import ChernivtsiPowerOffCoordinator
 
 PLATFORMS: list[Platform] = [Platform.CALENDAR, Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Lviv Power Offline from a config entry."""
-    coordinator = LvivPowerOffCoordinator(hass, entry)
+    """Set up Chernivtsi Power Offline from a config entry."""
+    coordinator = ChernivtsiPowerOffCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
 
     entry.runtime_data = coordinator
