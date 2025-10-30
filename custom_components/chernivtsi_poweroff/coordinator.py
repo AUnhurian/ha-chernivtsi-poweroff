@@ -9,7 +9,15 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 
-from .const import DOMAIN, POWEROFF_GROUP_CONF, UPDATE_INTERVAL, PowerOffGroup, STATE_ON, STATE_OFF
+from .const import (
+    DOMAIN,
+    POWEROFF_GROUP_CONF,
+    UPDATE_INTERVAL,
+    PowerOffGroup,
+    STATE_ON,
+    STATE_OFF,
+    STATE_POSSIBLE_ON,
+)
 from .energyua_scrapper import EnergyUaScrapper
 from .entities import PowerOffPeriod
 
@@ -85,12 +93,25 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
     def current_state(self) -> str:
         """Get the current state."""
         now = dt_util.now()
-        event = self.get_event_at(now)
-        return STATE_OFF if event else STATE_ON
+        # OFF event has priority
+        off_event = self.get_event_at(now)
+        if off_event:
+            return STATE_OFF
+        # If any POSSIBLE_ON period matches now, reflect that
+        for period in self.periods:
+            if period.state != STATE_POSSIBLE_ON:
+                continue
+            start, end = period.to_datetime_period(now.tzinfo)
+            if start <= now <= end:
+                return STATE_POSSIBLE_ON
+        return STATE_ON
 
     def get_event_at(self, at: datetime) -> CalendarEvent | None:
         """Get the current event."""
         for period in self.periods:
+            # Calendar shows only OFF periods
+            if period.state != STATE_OFF:
+                continue
             start, end = period.to_datetime_period(at.tzinfo)
             if start <= at <= end:
                 return self._get_calendar_event(start, end)
@@ -104,6 +125,8 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
         """Get all events."""
         events = []
         for period in self.periods:
+            if period.state != STATE_OFF:
+                continue
             start, end = period.to_datetime_period(start_date.tzinfo)
             if start_date <= start <= end_date or start_date <= end <= end_date:
                 events.append(self._get_calendar_event(start, end))

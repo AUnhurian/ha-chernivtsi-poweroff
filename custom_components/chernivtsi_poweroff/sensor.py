@@ -12,7 +12,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import STATE_OFF, STATE_ON
+from .const import STATE_OFF, STATE_ON, STATE_POSSIBLE_ON
 from .coordinator import ChernivtsiPowerOffCoordinator
 
 LOGGER = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ SENSOR_TYPES: tuple[ChernivtsiPowerOffSensorDescription, ...] = (
         icon="mdi:transmission-tower",
         device_class=SensorDeviceClass.ENUM,
         name="Power state",
-        options=[STATE_ON, STATE_OFF],
+        options=[STATE_ON, STATE_OFF, STATE_POSSIBLE_ON],
         val_func=lambda coordinator: coordinator.current_state,
     ),
     ChernivtsiPowerOffSensorDescription(

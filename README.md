@@ -4,13 +4,12 @@
 
 # ⚡️ Home Assistant Chernivtsi PowerOff
 
-An integration for electricity shutdown schedules of [ChernivtsiOblEnergo](Chernivtsioblenergo). Based on data from [EnergyUA][energyua].
+An integration for electricity shutdown schedules of [ChernivtsiOblEnergo][chernivtsioblenergo].
 
-This integration for [Home Assistant][home-assistant] provides information about planned electricity shutdowns of [ChernivtsiOblEnergo](chernivtsioblenergo) in Lvivska oblast:
-calendar of planned shutdowns, time sensors for the next planned power on and off events. It is based on messages posted by a community
-driven project [EnergyUA][energyua].
+This integration for [Home Assistant][home-assistant] provides information about planned electricity shutdowns of [ChernivtsiOblEnergo][chernivtsioblenergo] in Chernivtsi oblast:
+calendar of planned shutdowns, and sensors for current state and next power on/off events.
 
-**💡 Note:** This project is not affiliated with [EnergyUA][energyua] or [ChervintsiOblEnergo](chernivtsioblenergo) in any way. This integration is developed by an individual.
+**💡 Note:** This project is not affiliated with [ChernivtsiOblEnergo][chernivtsioblenergo] in any way. This integration is developed by an individual.
 Provided data may be incorrect or misleading, follow the official channels for reliable information.
 
 > This integration is inspired by [ha-yasno-outages](https://github.com/denysdovhan/ha-yasno-outages) by [Denys Dovhan](https://github.com/denysdovhan).
@@ -33,7 +32,7 @@ If it doesn't work, adding this repository to HACS manually by adding this URL:
 
 This integration is configurable via UI. On **Devices and Services** page, click **Add Integration** and search for **Chernivtsi PowerOff**.
 
-Find your group by visiting [EnergyUA][energyua] website and typing your address in the search bar. Select your group in the configuration.
+Select your group (1..12) in the configuration. The integration parses the official schedule on [oblenergo.cv.ua][chernivtsioblenergo].
 
 Then you can add the integration to your dashboard and see the information about the next planned outages.
 
@@ -45,7 +44,6 @@ Integration also provides a calendar view of planned outages. You can add it to 
 
 <!-- References -->
 
-[energyua]: https://chernivtsi.energy-ua.info/
 [chernivtsioblenergo]: https://oblenergo.cv.ua/
 [home-assistant]: https://www.home-assistant.io/
 [hacs-url]: https://github.com/hacs/integration
