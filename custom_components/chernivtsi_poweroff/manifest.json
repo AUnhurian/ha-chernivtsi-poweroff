@@ -1,5 +1,5 @@
 {
-    "domain": "Chernivtsi_poweroff",
+    "domain": "chernivtsi_poweroff",
     "name": "Chernivtsi Power Offline",
     "codeowners": ["@oppenheimer14"],
     "config_flow": true,

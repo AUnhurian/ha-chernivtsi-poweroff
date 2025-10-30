@@ -18,3 +18,4 @@ config/*
 
 # Local configuration
 .env
+.idea
