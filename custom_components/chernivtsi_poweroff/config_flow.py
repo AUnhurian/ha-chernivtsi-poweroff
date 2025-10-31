@@ -7,8 +7,8 @@ from typing import Any
 
 import voluptuous as vol
 
-from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
-from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResult, OptionsFlow
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
 
 from .const import DOMAIN, POWEROFF_GROUP_CONF, PowerOffGroup
@@ -63,6 +63,74 @@ class ChernivtsiPowerOffConfigFlow(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+        )
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
+        """Get the options flow for this handler."""
+        return ChernivtsiPowerOffOptionsFlowHandler(config_entry)
+
+
+class ChernivtsiPowerOffOptionsFlowHandler(OptionsFlow):
+    """Handle options flow for Chernivtsi Power Offline."""
+
+    def __init__(self, config_entry: ConfigEntry) -> None:
+        """Initialize options flow."""
+        self.config_entry = config_entry
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Manage the options."""
+        if user_input is not None:
+            # Validate the new group
+            try:
+                await validate_input(self.hass, user_input)
+            except CannotConnect:
+                return self.async_show_form(
+                    step_id="init",
+                    data_schema=vol.Schema(
+                        {
+                            vol.Required(
+                                POWEROFF_GROUP_CONF,
+                                default=self.config_entry.data[POWEROFF_GROUP_CONF],
+                            ): vol.Coerce(PowerOffGroup),
+                        }
+                    ),
+                    errors={"base": "cannot_connect"},
+                )
+            except Exception:
+                _LOGGER.exception("Unexpected exception")
+                return self.async_show_form(
+                    step_id="init",
+                    data_schema=vol.Schema(
+                        {
+                            vol.Required(
+                                POWEROFF_GROUP_CONF,
+                                default=self.config_entry.data[POWEROFF_GROUP_CONF],
+                            ): vol.Coerce(PowerOffGroup),
+                        }
+                    ),
+                    errors={"base": "unknown"},
+                )
+
+            # Update the config entry data
+            self.hass.config_entries.async_update_entry(
+                self.config_entry, data={**self.config_entry.data, **user_input}
+            )
+            return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        POWEROFF_GROUP_CONF,
+                        default=self.config_entry.data[POWEROFF_GROUP_CONF],
+                    ): vol.Coerce(PowerOffGroup),
+                }
+            ),
         )
 
 

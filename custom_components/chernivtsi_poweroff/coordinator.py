@@ -44,11 +44,13 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
         self.group: PowerOffGroup = config_entry.data[POWEROFF_GROUP_CONF]
         self.api = EnergyUaScrapper(self.group)
         self.periods: list[PowerOffPeriod] = []
+        self.last_update: datetime | None = None
 
     async def _async_update_data(self) -> dict:
         """Fetch power off periods from scrapper."""
         try:
             await self._fetch_periods()
+            self.last_update = dt_util.now()
             return {}  # noqa: TRY300
         except Exception as err:
             LOGGER.exception("Cannot obtain power offs periods for group %s", self.group)
@@ -138,3 +140,15 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
             end=end,
             summary=STATE_OFF,
         )
+
+    @property
+    def last_update_time(self) -> datetime | None:
+        """Get the last successful update timestamp."""
+        return self.last_update
+
+    def update_group(self, new_group: PowerOffGroup) -> None:
+        """Update the group and recreate the scraper."""
+        self.group = new_group
+        self.api = EnergyUaScrapper(new_group)
+        self.periods = []
+        self.last_update = None
