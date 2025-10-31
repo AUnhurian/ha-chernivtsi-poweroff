@@ -48,9 +48,16 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self) -> dict:
         """Fetch power off periods from scrapper."""
+        LOGGER.debug("Starting data update for group %s", self.group)
         try:
             await self._fetch_periods()
             self.last_update = dt_util.now()
+            LOGGER.debug(
+                "Successfully updated data for group %s. Found %d periods. Last update: %s",
+                self.group,
+                len(self.periods),
+                self.last_update,
+            )
             return {}  # noqa: TRY300
         except Exception as err:
             LOGGER.exception("Cannot obtain power offs periods for group %s", self.group)

@@ -120,7 +120,7 @@ class ChernivtsiPowerOffOptionsFlowHandler(OptionsFlow):
                 self.config_entry, data={**self.config_entry.data, **user_input}
             )
             
-            # Immediately update coordinator and trigger refresh
+            # Update coordinator with new group and trigger immediate refresh
             if (
                 self.config_entry.runtime_data
                 and hasattr(self.config_entry.runtime_data, "update_group")
@@ -132,9 +132,8 @@ class ChernivtsiPowerOffOptionsFlowHandler(OptionsFlow):
                     if coordinator.group != new_group:
                         old_group = coordinator.group
                         coordinator.update_group(new_group)
-                        # Trigger immediate refresh to fetch new data
-                        _LOGGER.info("Updating group from %s to %s, triggering refresh", old_group, new_group)
-                        # Schedule refresh - coordinator will fetch new data for new group
+                        _LOGGER.info("Updating group from %s to %s, triggering immediate refresh", old_group, new_group)
+                        # Trigger immediate refresh to fetch new data for the new group
                         self.hass.async_create_task(coordinator.async_refresh())
             
             return self.async_create_entry(title="", data={})

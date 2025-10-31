@@ -11,6 +11,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import STATE_OFF, STATE_ON, STATE_POSSIBLE_ON
 from .coordinator import ChernivtsiPowerOffCoordinator
@@ -69,14 +70,16 @@ async def async_setup_entry(
     async_add_entities(ChernivtsiPowerOffSensor(coordinator, description) for description in SENSOR_TYPES)
 
 
-class ChernivtsiPowerOffSensor(SensorEntity):
+class ChernivtsiPowerOffSensor(CoordinatorEntity[ChernivtsiPowerOffCoordinator], SensorEntity):
+    """Sensor entity that uses coordinator for automatic updates."""
+    
     def __init__(
         self,
         coordinator: ChernivtsiPowerOffCoordinator,
         entity_description: ChernivtsiPowerOffSensorDescription,
     ) -> None:
         """Initialize the sensor."""
-        self.coordinator = coordinator
+        super().__init__(coordinator)
         self.entity_description = entity_description
         self._attr_unique_id = (
             f"{coordinator.config_entry.entry_id}-{self.entity_description.key}"
