@@ -41,9 +41,7 @@ class ChernivtsiPowerOffCalendar(CalendarEntity):
             name="Chernivtsi PowerOff Calendar",
         )
         self._attr_unique_id = (
-            f"{coordinator.config_entry.entry_id}-"
-            f"{coordinator.group}-"
-            f"{self.entity_description.key}"
+            f"{coordinator.config_entry.entry_id}-{self.entity_description.key}"
         )
 
     @property
