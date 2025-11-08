@@ -117,13 +117,18 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
 
     def get_event_at(self, at: datetime) -> CalendarEvent | None:
         """Get the current event."""
+        # Check OFF periods first (higher priority)
         for period in self.periods:
-            # Calendar shows only OFF periods
-            if period.state != STATE_OFF:
-                continue
-            start, end = period.to_datetime_period(at.tzinfo)
-            if start <= at <= end:
-                return self._get_calendar_event(start, end)
+            if period.state == STATE_OFF:
+                start, end = period.to_datetime_period(at.tzinfo)
+                if start <= at <= end:
+                    return self._get_calendar_event(start, end, STATE_OFF)
+        # Check POSSIBLE_ON periods
+        for period in self.periods:
+            if period.state == STATE_POSSIBLE_ON:
+                start, end = period.to_datetime_period(at.tzinfo)
+                if start <= at <= end:
+                    return self._get_calendar_event(start, end, STATE_POSSIBLE_ON)
         return None
 
     def get_events_between(
@@ -131,21 +136,22 @@ class ChernivtsiPowerOffCoordinator(DataUpdateCoordinator):
         start_date: datetime,
         end_date: datetime,
     ) -> list[CalendarEvent]:
-        """Get all events."""
+        """Get all events (both OFF and POSSIBLE_ON periods)."""
         events = []
         for period in self.periods:
-            if period.state != STATE_OFF:
+            if period.state not in (STATE_OFF, STATE_POSSIBLE_ON):
                 continue
             start, end = period.to_datetime_period(start_date.tzinfo)
             if start_date <= start <= end_date or start_date <= end <= end_date:
-                events.append(self._get_calendar_event(start, end))
+                events.append(self._get_calendar_event(start, end, period.state))
         return events
 
-    def _get_calendar_event(self, start: datetime, end: datetime) -> CalendarEvent:
+    def _get_calendar_event(self, start: datetime, end: datetime, state: str) -> CalendarEvent:
+        """Create a calendar event with appropriate summary based on state."""
         return CalendarEvent(
             start=start,
             end=end,
-            summary=STATE_OFF,
+            summary=state,
         )
 
     @property
