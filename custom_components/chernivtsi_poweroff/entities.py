@@ -20,10 +20,18 @@ class PowerOffPeriod:
         if not self.today:
             now += timedelta(days=1)
 
-        start_hour, start_minute = divmod(self.start, 60)
-        end_hour, end_minute = divmod(self.end, 60)
+        # Normalize start and end to be within 0-1439 minutes (0:00-23:59)
+        start_minutes = self.start % 1440
+        end_minutes = self.end % 1440
+        
+        start_hour, start_minute = divmod(start_minutes, 60)
+        end_hour, end_minute = divmod(end_minutes, 60)
+        
         start = now.replace(hour=start_hour, minute=start_minute, second=0, microsecond=0)
         end = now.replace(hour=end_hour, minute=end_minute, second=0, microsecond=0)
-        if end < start:
+        
+        # If end is before start or end is exactly 24:00 (1440 minutes), it's next day
+        if end < start or self.end >= 1440:
             end += timedelta(days=1)
+        
         return start, end
